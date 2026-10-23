@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow"><!-- tirar o noindex só com autorização de publicação -->
+<title>Amostra grátis · Natal Sem Prejuízo</title>
+<meta name="description" content="Amostra grátis do Natal Sem Prejuízo: o passo a passo do preço de um produto de Natal e uma calculadora para testar com a sua receita.">
+<meta property="og:title" content="Amostra grátis · Natal Sem Prejuízo">
+<meta property="og:description" content="Amostra grátis do Natal Sem Prejuízo: o passo a passo do preço de um produto de Natal e uma calculadora para testar com a sua receita.">
+<meta property="og:image" content="https://joaovictor-ops.github.io/natal-sem-prejuizo/amostra/capa_amostra.jpg">
+<!-- Pixel da Meta (dataset 1445537464173207, o mesmo das landings): PageView + BaixouAmostra no clique -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1445537464173207');
+fbq('track', 'PageView');
+</script>
+<style>
+@font-face{font-family:Fraunces;font-weight:600 800;font-display:swap;src:url(../fonts/fraunces-latin.woff2) format('woff2')}
+@font-face{font-family:Fraunces;font-weight:600 800;font-display:swap;src:url(../fonts/fraunces-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+1E00-1EFF}
+body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;color:#2B2622;background:#FFF8EC}
+main{max-width:560px;margin:0 auto;padding:28px 18px 40px}
+.brand{font-family:Fraunces,Georgia,serif;font-weight:600;color:#A3262A;font-size:20px}
+h1{font-family:Fraunces,Georgia,serif;font-weight:700;color:#2B2622;font-size:32px;line-height:1.1;margin:18px 0 10px}
+p{font-size:17px;line-height:1.5}
+ul{padding-left:20px;font-size:16px;line-height:1.6}
+.btn{display:block;text-align:center;background:#A3262A;color:#fff;font-family:Fraunces,Georgia,serif;font-weight:600;font-size:21px;padding:16px;border-radius:14px;text-decoration:none;margin:14px 0}
+.btn.sec{background:#fff;color:#A3262A;border:2px solid #A3262A}
+.small{font-size:13px;color:#5E6570}
+.capa{width:100%;border-radius:10px;box-shadow:0 8px 22px rgba(0,0,0,.15);margin:8px 0 6px}
+.mais{margin-top:26px;padding-top:16px;border-top:1px solid #ddd}
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">Natal Sem Prejuízo</div>
+  <h1>Amostra grátis: o preço do seu panetone em 5 minutos</h1>
+  <img class="capa" src="capa_amostra.jpg" alt="Capa da amostra grátis" width="560" height="792">
+  <p>Duas coisas para você testar com a sua receita, antes de decidir:</p>
+  <ul><li>PDF de 4 páginas: como chegar ao custo, ao preço mínimo e ao preço sugerido de um panetone;</li><li>Calculadora de 1 produto (planilha .xlsx): você digita a receita e ela mostra se o preço dá lucro ou prejuízo.</li></ul>
+  <p>A calculadora abre no Excel ou no Google Planilhas (envie para o Drive e use “Salvar como Planilhas Google”).</p>
+  <a class="btn" data-arq="pdf" href="#">Baixar a amostra (PDF)</a><a class="btn" data-arq="xlsx" href="#">Baixar a calculadora (.xlsx)</a>
+  <p class="small">Não pede cadastro nem e-mail. Pode compartilhar.</p>
+  <div class="mais">
+    <p><b>Kit completo: R$ 27,90.</b> Planilha para até 15 produtos, encomendas com sinal e saldo, lista de compras, produção por dia, guia de 28 páginas, cardápio editável e ficha de pedido.</p>
+    <a id="kit" class="btn sec" href="../">Conhecer o kit completo</a>
+  </div>
+</main>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var fonte = (q.get('utm_source') || '').toLowerCase();
+  var origem = (q.get('utm_content') || q.get('o') || '').toLowerCase();
+  var versoes = {"_": {"pdf": "Natal_Sem_Prejuizo_AMOSTRA_master.pdf", "xlsx": "Calculadora_1_produto_Natal_Sem_Prejuizo_master.xlsx"}, "facebook": {"pdf": "Natal_Sem_Prejuizo_AMOSTRA_fb_grupos.pdf", "xlsx": "Calculadora_1_produto_Natal_Sem_Prejuizo_fb_grupos.xlsx"}, "instagram": {"pdf": "Natal_Sem_Prejuizo_AMOSTRA_instagram.pdf", "xlsx": "Calculadora_1_produto_Natal_Sem_Prejuizo_instagram.xlsx"}, "pinterest": {"pdf": "Natal_Sem_Prejuizo_AMOSTRA_pinterest.pdf", "xlsx": "Calculadora_1_produto_Natal_Sem_Prejuizo_pinterest.xlsx"}};  // cada origem recebe o arquivo com o link (UTM) dela
+  var v = versoes[fonte] || versoes['_'];
+  document.querySelectorAll('a[data-arq]').forEach(function (a) {
+    a.href = v[a.getAttribute('data-arq')];
+    a.addEventListener('click', function () {
+      if (window.fbq) fbq('trackCustom', 'BaixouAmostra', {produto: 'P004', arquivo: a.getAttribute('data-arq'), origem: origem || 'direto'});
+    });
+  });
+  // o botão do kit leva as mesmas UTMs para a landing (que repassa ao checkout)
+  if (location.search) document.getElementById('kit').href = '../' + location.search;
+})();
+</script>
+</body>
+</html>
