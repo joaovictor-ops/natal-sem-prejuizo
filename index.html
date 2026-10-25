@@ -184,7 +184,7 @@ footer p{margin:0 0 8px}
       <figure>
         <h3>4. Resumo do Natal</h3>
         <p>Pedidos, unidades, o dia com mais trabalho, o dinheiro que entra, o que sai e o que ainda falta receber. Só com os pedidos que você anotar: não é previsão de vendas.</p>
-        <div class="shot"><img loading="lazy" src="img/resumo.jpg" width="900" height="975" alt="Aba Resumo do Natal com pedidos, dinheiro previsto, recebimentos e compras"></div>
+        <div class="shot"><img loading="lazy" src="img/resumo.jpg" width="900" height="564" alt="Aba Resumo do Natal com pedidos, recebimentos e compras"></div>
         <p class="cap">Exemplo com 15 pedidos fictícios. Não é promessa de faturamento.</p>
       </figure>
     </div>
@@ -311,23 +311,32 @@ Array.prototype.forEach.call(document.querySelectorAll('.lg'), function (e) { e.
 // sck = utm_content (ou o sck recebido; sem nenhum, "direto"). src = utm_source, quando houver.
 // Ex.: landing?utm_source=facebook&utm_medium=organico&utm_campaign=p004_lancamento&utm_content=p004_amostra_fbgrupos
 //  -> checkout?utm_source=facebook&utm_medium=organico&utm_campaign=p004_lancamento&utm_content=p004_amostra_fbgrupos&sck=p004_amostra_fbgrupos&src=facebook
+// Repassa também o fbclid do anúncio (lição do P001): o pixel no checkout da Kiwify cria o _fbc a partir dele e a Meta
+// consegue ligar a Compra ao clique. Sem fbclid na URL, usa o que ficou guardado no cookie _fbc desta página.
+function fbclidAtual(q) {
+  if (q.get('fbclid')) return q.get('fbclid');
+  var m = document.cookie.match(/(?:^|;\s*)_fbc=fb\.\d+\.\d+\.([^;]+)/);
+  return m ? decodeURIComponent(m[1]) : '';
+}
 function checkoutLink() {
   var q = new URLSearchParams(location.search), out = new URLSearchParams();
   q.forEach(function (v, k) { if (/^utm_/.test(k)) out.set(k, v); });
   out.set('sck', q.get('utm_content') || q.get('sck') || 'direto');
   if (q.get('utm_source')) out.set('src', q.get('utm_source'));
+  var fbclid = fbclidAtual(q);
+  if (fbclid) out.set('fbclid', fbclid);
   return CHECKOUT_URL + (CHECKOUT_URL.indexOf('?') >= 0 ? '&' : '?') + out.toString();
 }
 Array.prototype.forEach.call(document.querySelectorAll('a.cta'), function (a) {
   if (PRONTO) {
     a.href = checkoutLink();
-    // InitiateCheckout no clique (pedido de JV). Se o pixel também for ligado no checkout da Kiwify,
-    // o evento pode contar 2 vezes: ver RASTREAMENTO_P004.md. Só age se o pixel carregou.
+    // CliqueCheckout no clique (evento próprio, como no P001). O pixel está ligado no checkout da Kiwify, que dispara
+    // o InitiateCheckout e a Compra; usar InitiateCheckout aqui contaria o mesmo clique duas vezes.
     a.addEventListener('click', function (e) {
+      var href = a.href = checkoutLink(); // recalcula no clique (o cookie _fbc pode ter sido criado depois)
       if (!window.fbq) return;
       e.preventDefault();
-      var href = a.href;
-      fbq('track', 'InitiateCheckout', {content_name: 'Natal Sem Prejuízo', content_ids: ['P004'], content_type: 'product', num_items: 1, value: 27.90, currency: 'BRL'});
+      fbq('trackCustom', 'CliqueCheckout', {content_name: 'Natal Sem Prejuízo', content_ids: ['P004'], content_type: 'product', num_items: 1, value: 27.90, currency: 'BRL'});
       setTimeout(function () { window.location.href = href; }, 300);
     });
   } else {
