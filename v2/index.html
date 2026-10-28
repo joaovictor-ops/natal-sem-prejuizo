@@ -391,7 +391,7 @@ Array.prototype.forEach.call(document.querySelectorAll('a.cta'), function (a) {
 // Só envia nomes de evento e números (rolagem, segundos, posição do botão). Nada digitado, nada de identidade.
 // Microsoft Clarity: carrega só se CLARITY_ID estiver preenchido (mascaramento total de texto ligado pelo painel).
 (function () {
-  var CLARITY_ID = ''; // preencher com o ID do projeto Clarity (o mesmo instalado na V1)
+  var CLARITY_ID = 'z4z7kl1uhw'; // projeto Clarity "Negocio Digital Landings" (o mesmo da V1)
   if (CLARITY_ID) {
     (function (c, l, a, r, i, t, y) { c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
       t = l.createElement(r); t.async = 1; t.src = 'https://www.clarity.ms/tag/' + i; y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
@@ -399,6 +399,7 @@ Array.prototype.forEach.call(document.querySelectorAll('a.cta'), function (a) {
   }
   var PROD = document.documentElement.getAttribute('data-produto') || '';
   var VER = 'v2';
+  if (window.clarity) { clarity('set', 'produto', PROD); clarity('set', 'versao', VER); }
   function ev(nome, extra) {
     var p = {content_ids: [PROD], versao: VER};
     for (var k in extra || {}) p[k] = extra[k];
